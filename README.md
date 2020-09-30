@@ -13,3 +13,6 @@ The files "matrixOps.c" and "matrixOps.h" form a library of linear algebra funct
 
 To see how these are implemented, consult "LSA_linear.c" or "LSA_quad.c" which apply this library for
 Least-Squares Analysis (linear regression) using straight line and quadratic fits respectively.
+
+All the programs have been tested on GCC on OSX and Windows. The functions assume that
+variable-length arrays (VLAs) are enabled in your compiler (e.g. using C99 or higher)
