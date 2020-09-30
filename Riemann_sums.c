@@ -9,9 +9,9 @@ Created by: Oscar A. Nieves
 #include <stdlib.h>
 #include <math.h>
 
-void linspace(int N, double xlow, double xhigh, double *dx, double x[N]);
+void linspace(int N, double xlow, double xhigh, double x[N]);
 void yfunc(int N, double x[N], double y[N]);
-double Riemann(int N, double dx, double y[N]);
+double Riemann(int N, double xlow, double xhigh, double y[N]);
 double perc_error(int N, double exact_val, double numeric_val);
 
 //--- Main Program ---//
@@ -23,16 +23,15 @@ int main() {
 	double I_exact = 8.6667; //exact integral
 	double I_numeric; //numeric estimate
 	double xv[N], yv[N]; //arrays
-	double step; //step-size
 	
 	//generate array x	
-	linspace(N, a, b, &step, xv);
+	linspace(N, a, b, xv);
 	
 	//define function y = f(x)	
 	yfunc(N, xv, yv);
 	
 	//calculate integral
-	I_numeric = Riemann(N, step, yv);
+	I_numeric = Riemann(N, a, b, yv);
 	
 	//check error
 	double error_p = perc_error(N, I_exact, I_numeric);
@@ -44,12 +43,11 @@ int main() {
 }
 
 //--- Functions ---//
-void linspace(int N, double xlow, double xhigh, double *dx, double x[N]) {
-	double spacings = N - 1;
-	double step_size = (xhigh - xlow)/( (double)spacings );
-	*dx = step_size;
+void linspace(int N, double xlow, double xhigh, double x[N]) {
+	int spacings = N - 1;
+	double step_size = (xhigh - xlow) / ( (double)spacings );
 	for (int i = 0; i < N; i++) {
-		x[ i ] = xlow + i * (*dx);
+		x[ i ] = xlow + i * step_size;
 	}
 }
 
@@ -59,8 +57,10 @@ void yfunc(int N, double x[N], double y[N]) {
 	}
 }
 
-double Riemann(int N, double dx, double y[N]) {
+double Riemann(int N, double xlow, double xhigh, double y[N]) {
 	double integral_value;
+	int rectangles = N - 1;
+	double dx = (xhigh - xlow) / ( (double)rectangles );
 	for (int n = 0; n < N-1; n++) {
 		integral_value += dx * y[n];
 	}
