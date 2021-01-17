@@ -18,5 +18,5 @@ Least-Squares Analysis (linear regression) using straight line and quadratic fit
 
 
 *Note:
-All the programs have been tested on GCC on OSX and Windows. The functions assume that
+All the programs have been tested on GCC in OSX Catalina 10.15. The functions assume that
 variable-length arrays (VLAs) are enabled in your compiler (e.g. using C99 or higher)
